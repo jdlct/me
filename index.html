@@ -815,32 +815,32 @@
         var me = null;
 
         for (var i = 0; i < members.length; i++) {
-          if ((members[i].username || "").toLowerCase() === want) {
-            me = members[i];
-            break;
-          }
+        if ((members[i].username || "").toLowerCase() === want) {
+          me = members[i];
+          break;
         }
+      }
 
-        if (me) {
-          paint(me.status);
-          if (me.username) nameEl.textContent = me.username;
-          if (me.avatar_url) photo(me.avatar_url + "?size=256");
-        } else {
-          paint("offline");
-        }
-      })
-      .catch(function () { paint("offline"); })
-      .finally(function () { busy = false; });
+      if (me) {
+        paint(me.status);
+        if (me.username) nameEl.textContent = me.username;
+        if (me.avatar_url) photo(me.avatar_url + "?size=256");
+      } else {
+        paint("offline");
+      }
+    })
+    .catch(function () { paint("offline"); })
+    .finally(function () { busy = false; });
   }
 
-  fetch("http://78.154.103.17:16396/notify", { method: "POST" }).catch(function(){});
-
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var coarse = window.matchMedia("(hover: none)").matches;
   var root = document.documentElement;
   var raf = null;
   var x = 50, y = 42;
 
   function move() {
+    raf = null;
     raf = null;
     root.style.setProperty("--ry", ((x - 50) / 50 * 2.6).toFixed(2) + "deg");
     root.style.setProperty("--rx", (-(y - 50) / 50 * 2.6).toFixed(2) + "deg");
